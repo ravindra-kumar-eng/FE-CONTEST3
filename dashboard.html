@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="contain">
+        <!-- NAVBAR -->
+
+        <nav class="navbar">
+            <div class="left">Teacher Portal</div>
+            <div class="right">
+                <div class="lright-item1">Signup</div>
+                <div class="right-item2">Login</div>
+            </div>
+        </nav>
+
+        <div class="container-2">
+            <div class="heading bold">Teachers Dashboard</div>
+            <div class="heading welc">Welcome Back:</div>
+            <div class="heading email">Your Email ID:</div>
+            <div class="heading bold">Change Password</div>
+
+            <form class="form">
+                <div class="form-group">
+                <input type="password" placeholder="Old Password"  class="old"><br>
+                <span id="old"></span>
+            </div>
+                <div class="form-group">
+                <input type="password" placeholder="New Password"  ><br>
+                <span id="pass"></span>
+            </div>
+                <div class="form-group">
+                <input type="password" placeholder="Confirm New Password "  ><br>
+                <span id="cpass"></span>
+            </div>
+                <button class="signup-btn change">Change</button><br>
+                <button class="signup-btn logout">Logout</button>
+            </form>
+        </div>
+
+    </div>   
+</body>
+<script >
+ 
+ let name=document.querySelector(".welc");
+ let email=document.querySelector(".email");
+ let data=JSON.parse(localStorage.getItem('data'));
+ console.log(data);
+ name.innerHTML=`Welcome Back: ${data[0].name}`
+ email.innerHTML=`Your Email ID: ${data[0].email}`
+
+ let change=document.querySelector(".change");
+ let logout=document.querySelector(".logout");
+ let old=document.querySelector(".old");
+
+ change.addEventListener("click",function(e){
+    e.preventDefault();
+    let Old=old.value;
+    if(Old!= data[0].Password){
+        document.getElementById('old').innerHTML="Old Password Does Not Match"
+    }
+
+ })
+
+ logout.addEventListener("click",function(e){
+    localStorage.clear();
+    window.location.href="/signup.html"
+ })
+
+
+</script>
+</html>

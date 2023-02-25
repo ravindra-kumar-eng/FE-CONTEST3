@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIGNUP-PAGE</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="contain">
+      <!-- NAVBAR -->
+
+      <nav class="navbar">
+        <div class="left">Teacher Portal</div>
+        <div class="right">
+          <div class="lright-item1">Signup</div>
+          <div class="right-item2">Login</div>
+        </div>
+      </nav>
+
+      <div class="container-2">
+        <div class="heading">Teachers Signup</div>
+        <form class="form">
+          <div class="form-group">
+            <input type="text" placeholder="Full Name" class="User"  /><br />
+            <span id="user"></span>
+          </div>
+
+          <div class="form-group">
+            <input type="email" placeholder="Email" class="Email"  /><br />
+            <span id="email"></span>
+          </div>
+
+          <div class="form-group">
+            <input type="password" placeholder="Password" class="Pass"  /><br />
+            <span id="pass"></span>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="password"placeholder="Confirm Password " class="CPass"  /><br />
+              <span id="cpass"></span>
+          </div>
+
+          <input  type="submit" class="signup-btn"></input>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script >
+
+    let arr=[];
+    let id=1;
+    let signup=document.querySelector(".form");
+    let User=document.querySelector(".User");
+        let Email=document.querySelector(".Email");
+        let Pass=document.querySelector(".Pass");
+        let CPass=document.querySelector(".CPass");
+
+    signup.addEventListener("submit",function(e){
+        e.preventDefault();
+       let name=User.value;
+       let email=Email.value;
+       let Password=Pass.value;
+       let CPassword=CPass.value;
+       var passwordcheck=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    var emailcheck=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+
+       if(name == ""){
+        document.getElementById('user').innerHTML = "* Please fill the Username";
+        return false;
+       }else if (email == "") {
+        document.getElementById('email').innerHTML = "* Please fill the email";
+        return false;
+    }
+       else if(emailcheck.test(email)== false){
+        document.getElementById('email').innerHTML = "* Invalid Email";
+        return false;
+       }
+       else if(checkEmail(email)== false){
+        document.getElementById('email').innerHTML = "* Email already exists";
+        return false;
+       }
+       else  if (Password == "") {
+        document.getElementById('password').innerHTML = "* Please fill the password";
+        return false;
+    }
+    else if(passwordcheck.test(Password)== false){
+        document.getElementById('pass').innerHTML ="* Please fill atleast 1 Capital letter, 1 small letter , 1 Special character, 1 numaric value";
+        return false;
+    }
+    else if (CPassword == "") {
+        document.getElementById('cpass').innerHTML = "* Please fill the confirm password";
+        return false;
+    }
+    else if(CPassword!= Password){
+        document.getElementById('cpass').innerHTML = "* Password not matched";
+        return false;
+    }
+    else{
+        let obj={id:id++,name,email,Password};
+        arr.push(obj);
+        name="";
+        email="";
+        Password="";
+        CPassword="";
+        localStorage.setItem("data",JSON.stringify(arr));
+        window.location.href="/login.html";
+
+    }
+       
+
+    })
+
+
+    function checkEmail(email){
+    for(t of arr){
+        if(t.email==email){
+            return false
+        }
+    }
+    return true
+}
+
+
+  </script>
+</html>

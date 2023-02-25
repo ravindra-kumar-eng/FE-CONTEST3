@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOGIN-PAGE</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="contain">
+      <!-- NAVBAR -->
+
+      <nav class="navbar">
+        <div class="left">Teacher Portal</div>
+        <div class="right">
+          <div class="lright-item1">Signup</div>
+          <div class="right-item2">Login</div>
+        </div>
+      </nav>
+
+      <div class="container-2">
+        <div class="heading">Teachers Login</div>
+        <form class="form">
+          <div class="form-group">
+            <input type="email" placeholder="Email" class="Email2"/><br />
+            <span id="email"></span>
+          </div>
+
+          <div class="form-group">
+            <input type="password" placeholder="Password" class="Pass2"/><br />
+            <span id="pass"></span>
+          </div>
+
+          
+          <button class="signup-btn login">Login</button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script>
+
+let Button2=document.querySelector(".login");
+let Email2=document.querySelector(".Email2");
+let Password2=document.querySelector(".Pass2");
+let arr2;
+
+Button2.addEventListener("click",function(e){
+    e.preventDefault();
+    let email2=Email2.value;
+    let password2=Password2.value;
+    arr2=JSON.parse(localStorage.getItem('data'));
+    console.log(arr2);
+
+    let cases=["Email not found","Password Incorrect", "Login successful"];
+    let x=checkLogin(email2,password2)
+
+    if(x==0 ){
+        document.getElementById('email').innerHTML = cases[x];
+    }
+    else if(x==1){
+        document.getElementById('pass').innerHTML =cases[x];
+    }
+    else{
+        alert(cases[x]);
+        let token=generateCouponCode();
+        
+        arr2.push({
+            token:token});
+        // localStorage.setItem("data",JSON.stringify(token));
+        window.location.href="/dashboard.html";
+
+    }
+
+})
+
+function checkLogin(email,password){
+    let flag=0
+    for(let t of arr2){
+        if(t.email == email){
+            if(t.Password == password){
+                return 2;
+            }
+            else{
+                return 1;
+            }
+            flag=1;
+        }
+    }
+    if(flag==0){
+        return 0;
+    }
+}
+
+function generateCouponCode(){
+    let characters='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let coupon='';
+    for(let i=0;i<16;i++){
+        coupon+=characters.charAt(Math.floor(Math.random()*characters.length));
+    }
+    return coupon;
+}
+
+
+
+  </script>
+</html>
